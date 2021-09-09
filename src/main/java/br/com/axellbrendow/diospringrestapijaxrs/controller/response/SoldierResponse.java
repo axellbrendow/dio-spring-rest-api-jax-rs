@@ -1,10 +1,27 @@
-package br.com.axellbrendow.diospringrestapijaxrs.controller.request;
+package br.com.axellbrendow.diospringrestapijaxrs.controller.response;
 
-public class SoldierEditRequest {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class SoldierResponse {
+    private Long id;
     private String name;
     private String race;
     private String weapon;
     private String status;
+
+    @JsonProperty("id")
+    public Long getResourceId() {
+        return id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @JsonProperty("id")
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
