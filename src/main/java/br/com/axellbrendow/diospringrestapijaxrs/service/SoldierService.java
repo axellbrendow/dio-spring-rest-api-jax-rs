@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
 
+import br.com.axellbrendow.diospringrestapijaxrs.controller.request.SoldierEditRequest;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.dto.Soldier;
 import br.com.axellbrendow.diospringrestapijaxrs.entity.SoldierEntity;
@@ -45,7 +46,8 @@ public class SoldierService {
         repository.delete(repository.findById(id).orElseThrow(() -> new NotFoundException(id)));
     }
 
-    public void update(Long id, Soldier soldier) {
+    public void update(Long id, SoldierEditRequest editRequest) {
+        var soldier = mapper.convertValue(editRequest, Soldier.class);
         soldier.setId(id);
         save(soldier);
     }
