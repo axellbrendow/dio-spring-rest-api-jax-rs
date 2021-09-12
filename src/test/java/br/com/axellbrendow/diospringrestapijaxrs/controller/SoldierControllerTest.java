@@ -46,6 +46,25 @@ public class SoldierControllerTest {
     private SoldierService service;
 
     @Test
+    void itShouldList() throws Exception {
+        when(service.findAll()).thenReturn(CollectionModel.of(new ArrayList()));
+
+        mockMvc.perform(
+            get("/v1/soldier")
+                .header("Authorization", "strongpass")
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    void itShouldNotListIfNotLoggedIn() throws Exception {
+        when(service.findAll()).thenReturn(CollectionModel.of(new ArrayList()));
+
+        mockMvc.perform(
+            get("/v1/soldier")
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void itShouldCreate() throws Exception {
         var soldier = new Soldier();
         soldier.setName("soldier");
