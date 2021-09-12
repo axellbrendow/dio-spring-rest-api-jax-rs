@@ -30,7 +30,7 @@ public class SoldierResource {
         res.add(
             WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(SoldierController.class).delete(entity.getId())
-            ).withSelfRel()
+            ).withRel("delete").withTitle("Delete soldier").withType("delete")
         );
 
         return res;
@@ -48,7 +48,7 @@ public class SoldierResource {
         res.add(
             WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(SoldierController.class).delete(entity.getId())
-            ).withSelfRel()
+            ).withRel("delete").withTitle("Delete soldier").withType("delete")
         );
 
         return res;
