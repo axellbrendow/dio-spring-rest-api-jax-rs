@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'br.com.axellbrendow'
@@ -26,4 +27,26 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport{
+	dependsOn test
+	reports {
+		xml.enabled true
+		csv.enabled true
+		html.enabled true
+	}
+	finalizedBy jacocoTestCoverageVerification
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true
+			limit {
+				minimum = 0.5
+			}
+		}
+	}
 }
