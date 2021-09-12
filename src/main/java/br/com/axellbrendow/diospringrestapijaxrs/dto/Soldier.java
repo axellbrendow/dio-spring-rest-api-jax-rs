@@ -1,9 +1,11 @@
 package br.com.axellbrendow.diospringrestapijaxrs.dto;
 
+import br.com.axellbrendow.diospringrestapijaxrs.enums.Race;
+
 public class Soldier {
     private Long id;
     private String name;
-    private String race;
+    private Race race;
     private String weapon;
     private String status;
 
@@ -23,11 +25,11 @@ public class Soldier {
         this.name = name;
     }
 
-    public String getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(String race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
