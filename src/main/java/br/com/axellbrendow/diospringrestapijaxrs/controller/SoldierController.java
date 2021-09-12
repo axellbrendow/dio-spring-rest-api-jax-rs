@@ -1,9 +1,6 @@
 package br.com.axellbrendow.diospringrestapijaxrs.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.axellbrendow.diospringrestapijaxrs.controller.request.SoldierEditRequest;
+import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierListResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.dto.Soldier;
 import br.com.axellbrendow.diospringrestapijaxrs.service.SoldierService;
@@ -26,11 +24,9 @@ import br.com.axellbrendow.diospringrestapijaxrs.service.SoldierService;
 @RequestMapping("/v1/soldier")
 public class SoldierController {
     private SoldierService service;
-    private ObjectMapper mapper;
 
-    public SoldierController(SoldierService service, ObjectMapper mapper) {
+    public SoldierController(SoldierService service) {
         this.service = service;
-        this.mapper = mapper;
     }
 
     @GetMapping("/{id}")
@@ -39,11 +35,8 @@ public class SoldierController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SoldierResponse>> getAll() {
-        var soldiers = service.findAll().stream()
-            .map(it -> mapper.convertValue(it, SoldierResponse.class))
-            .collect(Collectors.toList());
-        return ResponseEntity.ok(soldiers);
+    public ResponseEntity<List<SoldierListResponse>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
@@ -53,12 +46,11 @@ public class SoldierController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Soldier> update(
+    public void update(
         @PathVariable Long id,
         @RequestBody SoldierEditRequest editRequest
     ) {
         service.update(id, editRequest);
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
