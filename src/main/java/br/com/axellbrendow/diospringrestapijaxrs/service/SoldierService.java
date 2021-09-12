@@ -44,7 +44,7 @@ public class SoldierService {
         res.add(
             WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(SoldierController.class).getAll()
-            ).withRel("Soldiers list")
+            ).withRel("soldiersList")
         );
         return res;
     }

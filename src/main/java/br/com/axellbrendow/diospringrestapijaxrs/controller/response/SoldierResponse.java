@@ -1,7 +1,5 @@
 package br.com.axellbrendow.diospringrestapijaxrs.controller.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.springframework.hateoas.RepresentationModel;
 
 public class SoldierResponse extends RepresentationModel<SoldierResponse> {
@@ -11,16 +9,10 @@ public class SoldierResponse extends RepresentationModel<SoldierResponse> {
     private String weapon;
     private String status;
 
-    @JsonProperty("id")
-    public Long getResourceId() {
-        return id;
-    }
-
     public Long getId() {
         return id;
     }
 
-    @JsonProperty("id")
     public void setId(Long id) {
         this.id = id;
     }
