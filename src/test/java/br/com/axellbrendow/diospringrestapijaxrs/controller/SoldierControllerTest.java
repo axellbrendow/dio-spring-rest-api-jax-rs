@@ -80,4 +80,38 @@ public class SoldierControllerTest {
         ).andExpect(status().isUnauthorized());
     }
 
+    @Test
+    void itShouldUpdate() throws Exception {
+        var soldier = new SoldierEditRequest();
+        soldier.setName("soldier");
+        soldier.setRace(Race.ELF);
+        soldier.setWeapon("Arrow and bow");
+        soldier.setStatus("active");
+
+        doNothing().when(service).update(1L, soldier);
+
+        mockMvc.perform(
+            put("/v1/soldier/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(soldier))
+                .header("Authorization", "strongpass")
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    void itShouldNotUpdateIfNotLoggedIn() throws Exception {
+        var soldier = new SoldierEditRequest();
+        soldier.setName("soldier");
+        soldier.setRace(Race.ELF);
+        soldier.setWeapon("Arrow and bow");
+        soldier.setStatus("active");
+
+        doNothing().when(service).update(1L, soldier);
+
+        mockMvc.perform(
+            put("/v1/soldier/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(soldier))
+        ).andExpect(status().isUnauthorized());
+    }
 }

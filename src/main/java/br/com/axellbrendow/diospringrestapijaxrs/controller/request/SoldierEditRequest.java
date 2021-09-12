@@ -1,8 +1,10 @@
 package br.com.axellbrendow.diospringrestapijaxrs.controller.request;
 
+import br.com.axellbrendow.diospringrestapijaxrs.enums.Race;
+
 public class SoldierEditRequest {
     private String name;
-    private String race;
+    private Race race;
     private String weapon;
     private String status;
 
@@ -14,11 +16,11 @@ public class SoldierEditRequest {
         this.name = name;
     }
 
-    public String getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(String race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
