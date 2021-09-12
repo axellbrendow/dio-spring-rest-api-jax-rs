@@ -8,26 +8,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import br.com.axellbrendow.diospringrestapijaxrs.controller.request.SoldierEditRequest;
+import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierListResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.dto.Soldier;
 import br.com.axellbrendow.diospringrestapijaxrs.entity.SoldierEntity;
 import br.com.axellbrendow.diospringrestapijaxrs.exception.NotFoundException;
 import br.com.axellbrendow.diospringrestapijaxrs.repository.SoldierRepository;
+import br.com.axellbrendow.diospringrestapijaxrs.resource.SoldierResource;
 
 @Service
 public class SoldierService {
     private SoldierRepository repository;
     private ObjectMapper mapper;
+    private SoldierResource resource;
 
-    public SoldierService(SoldierRepository repository, ObjectMapper mapper) {
+    public SoldierService(SoldierRepository repository, ObjectMapper mapper, SoldierResource resource) {
         this.repository = repository;
         this.mapper = mapper;
+        this.resource = resource;
     }
 
-    public List<Soldier> findAll() {
+    public List<SoldierListResponse> findAll() {
         var soldiers = repository.findAll();
         var dtos = soldiers.stream()
-            .map(it -> mapper.convertValue(it, Soldier.class))
+            .map(it -> resource.createLink(it))
             .collect(Collectors.toList());
         return dtos;
     }
