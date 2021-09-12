@@ -114,4 +114,23 @@ public class SoldierControllerTest {
                 .content(mapper.writeValueAsString(soldier))
         ).andExpect(status().isUnauthorized());
     }
+
+    @Test
+    void itShouldDelete() throws Exception {
+        doNothing().when(service).delete(1L);
+
+        mockMvc.perform(
+            delete("/v1/soldier/1")
+                .header("Authorization", "strongpass")
+        ).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void itShouldNotDeleteIfNotLoggedIn() throws Exception {
+        doNothing().when(service).delete(1L);
+
+        mockMvc.perform(
+            delete("/v1/soldier/1")
+        ).andExpect(status().isUnauthorized());
+    }
 }
