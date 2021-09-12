@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import br.com.axellbrendow.diospringrestapijaxrs.controller.SoldierController;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.request.SoldierEditRequest;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierListResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierResponse;
@@ -38,7 +40,13 @@ public class SoldierService {
 
     public SoldierResponse findById(Long id) {
         var soldier = repository.findById(id).orElseThrow(() -> new NotFoundException(id));
-        return mapper.convertValue(soldier, SoldierResponse.class);
+        var res = mapper.convertValue(soldier, SoldierResponse.class);
+        res.add(
+            WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SoldierController.class).getAll()
+            ).withRel("Soldiers list")
+        );
+        return res;
     }
 
     public void save(Soldier soldier) {
