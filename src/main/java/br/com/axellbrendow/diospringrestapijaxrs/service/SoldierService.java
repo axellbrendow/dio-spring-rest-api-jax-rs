@@ -1,10 +1,10 @@
 package br.com.axellbrendow.diospringrestapijaxrs.service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +30,12 @@ public class SoldierService {
         this.resource = resource;
     }
 
-    public List<SoldierListResponse> findAll() {
+    public CollectionModel<SoldierListResponse> findAll() {
         var soldiers = repository.findAll();
         var dtos = soldiers.stream()
-            .map(it -> resource.createLink(it))
+            .map(it -> resource.createFindAllLinks(it))
             .collect(Collectors.toList());
-        return dtos;
+        return CollectionModel.of(dtos);
     }
 
     public SoldierResponse findById(Long id) {

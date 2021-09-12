@@ -17,8 +17,24 @@ public class SoldierResource {
         this.mapper = mapper;
     }
 
-    public SoldierListResponse createLink(SoldierEntity entity) {
-        var listResponse = mapper.convertValue(entity, SoldierListResponse.class);
+    public SoldierListResponse createFindAllLinks(SoldierEntity entity) {
+        var res = mapper.convertValue(entity, SoldierListResponse.class);
+
+        res.add(
+            WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SoldierController.class).findById(entity.getId())
+            ).withSelfRel()
+        );
+
+        res.add(
+            WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SoldierController.class).delete(entity.getId())
+            ).withSelfRel()
+        );
+
+        return res;
+    }
+
 
         var response = WebMvcLinkBuilder.methodOn(SoldierController.class).findById(entity.getId());
         var link = WebMvcLinkBuilder.linkTo(response).withSelfRel();

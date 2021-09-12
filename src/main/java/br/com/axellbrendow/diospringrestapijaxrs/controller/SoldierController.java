@@ -1,7 +1,6 @@
 package br.com.axellbrendow.diospringrestapijaxrs.controller;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +34,7 @@ public class SoldierController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SoldierListResponse>> getAll() {
+    public ResponseEntity<CollectionModel<SoldierListResponse>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
