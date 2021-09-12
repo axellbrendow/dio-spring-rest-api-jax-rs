@@ -2,10 +2,12 @@ package br.com.axellbrendow.diospringrestapijaxrs.controller.response;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import br.com.axellbrendow.diospringrestapijaxrs.enums.Race;
+
 public class SoldierResponse extends RepresentationModel<SoldierResponse> {
     private Long id;
     private String name;
-    private String race;
+    private Race race;
     private String weapon;
     private String status;
 
@@ -25,11 +27,11 @@ public class SoldierResponse extends RepresentationModel<SoldierResponse> {
         this.name = name;
     }
 
-    public String getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(String race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 

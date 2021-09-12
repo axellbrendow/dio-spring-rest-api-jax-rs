@@ -46,6 +46,42 @@ public class SoldierControllerTest {
     private SoldierService service;
 
     @Test
+    void itShouldGetById() throws Exception {
+        var soldier = new SoldierResponse();
+        soldier.setName("soldier");
+        soldier.setRace(Race.ELF);
+        soldier.setWeapon("Arrow and bow");
+        soldier.setStatus("active");
+
+        when(service.findById(1L)).thenReturn(soldier);
+
+        mockMvc.perform(
+            get("/v1/soldier/1")
+                .header("Authorization", "strongpass")
+        ).andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", nullValue()))
+        .andExpect(jsonPath("$.name", is(soldier.getName())))
+        .andExpect(jsonPath("$.race", is(soldier.getRace().toString())))
+        .andExpect(jsonPath("$.weapon", is(soldier.getWeapon())))
+        .andExpect(jsonPath("$.status", is(soldier.getStatus())));
+    }
+
+    @Test
+    void itShouldNotGetByIdIfNotLoggedIn() throws Exception {
+        var soldier = new SoldierResponse();
+        soldier.setName("soldier");
+        soldier.setRace(Race.ELF);
+        soldier.setWeapon("Arrow and bow");
+        soldier.setStatus("active");
+
+        when(service.findById(1L)).thenReturn(soldier);
+
+        mockMvc.perform(
+            get("/v1/soldier/1")
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void itShouldList() throws Exception {
         when(service.findAll()).thenReturn(CollectionModel.of(new ArrayList()));
 
