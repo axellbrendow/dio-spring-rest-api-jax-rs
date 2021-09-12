@@ -2,7 +2,9 @@ package br.com.axellbrendow.diospringrestapijaxrs.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SoldierResponse {
+import org.springframework.hateoas.RepresentationModel;
+
+public class SoldierResponse extends RepresentationModel<SoldierResponse> {
     private Long id;
     private String name;
     private String race;
