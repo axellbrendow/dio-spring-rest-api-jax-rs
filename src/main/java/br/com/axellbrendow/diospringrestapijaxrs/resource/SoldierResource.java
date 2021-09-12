@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.axellbrendow.diospringrestapijaxrs.controller.SoldierController;
 import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierListResponse;
+import br.com.axellbrendow.diospringrestapijaxrs.controller.response.SoldierResponse;
 import br.com.axellbrendow.diospringrestapijaxrs.entity.SoldierEntity;
 
 @Component
@@ -35,12 +36,21 @@ public class SoldierResource {
         return res;
     }
 
+    public SoldierResponse createDetailsLinks(SoldierEntity entity) {
+        var res = mapper.convertValue(entity, SoldierResponse.class);
 
-        var response = WebMvcLinkBuilder.methodOn(SoldierController.class).findById(entity.getId());
-        var link = WebMvcLinkBuilder.linkTo(response).withSelfRel();
+        res.add(
+            WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SoldierController.class).getAll()
+            ).withRel("list")
+        );
 
-        listResponse.add(link);
+        res.add(
+            WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SoldierController.class).delete(entity.getId())
+            ).withSelfRel()
+        );
 
-        return listResponse;
+        return res;
     }
 }
