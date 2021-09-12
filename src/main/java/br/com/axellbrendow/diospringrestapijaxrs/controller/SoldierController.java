@@ -1,5 +1,6 @@
 package br.com.axellbrendow.diospringrestapijaxrs.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ import br.com.axellbrendow.diospringrestapijaxrs.service.SoldierService;
 @RequestMapping("/v1/soldier")
 public class SoldierController {
     private SoldierService service;
+
+    @Value("${testvalue}")
+    private String testvalue;
 
     public SoldierController(SoldierService service) {
         this.service = service;
